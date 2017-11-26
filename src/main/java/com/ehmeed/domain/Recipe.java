@@ -19,7 +19,7 @@ public class Recipe {
     private String directions;
     //private Difficulty difficulty;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "recipe")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
     private Set<Ingredient> ingredients;
 
     @Lob
