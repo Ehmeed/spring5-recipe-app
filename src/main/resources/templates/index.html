@@ -33,19 +33,23 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Description</th>
+                                <th>View</th>
                             </tr>
                             </thead>
                             <tr th:remove="all">
-                                <td th:text="${recipe.id}">1</td>
-                                <td th:text="${recipe.description}">Recipe One</td>
+                                <td>1</td>
+                                <td>Recipe One</td>
+                                <td><a href="#">View</a></td>
                             </tr>
                             <tr th:remove="all">
-                                <td th:text="${recipe.id}">2</td>
-                                <td th:text="${recipe.description}">Recipe Two</td>
+                                <td>2</td>
+                                <td>Recipe Two</td>
+                                <td><a href="#">View</a></td>
                             </tr>
                             <tr th:each="recipe : ${recipes}">
                                 <td th:text="${recipe.id}">0</td>
                                 <td th:text="${recipe.description}">No Recipe</td>
+                                <td><a href="#" th:href="@{'/recipe/show/' + ${recipe.id}}">View</a></td>
                             </tr>
                         </table>
                     </div>
