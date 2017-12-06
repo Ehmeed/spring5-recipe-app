@@ -20,6 +20,6 @@ public class RecipeController {
 
         model.addAttribute("recipe", recipeService.findById(new Long(id)));
 
-        return "/recipe/show";
+        return "recipe/show";
     }
 }
