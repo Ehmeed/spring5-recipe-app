@@ -1,7 +1,7 @@
 package com.ehmeed.controllers;
 
 import com.ehmeed.domain.Recipe;
-import com.ehmeed.services.RecipeServiceImpl;
+import com.ehmeed.services.RecipeService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class RecipeControllerTest {
 
     @Mock
-    RecipeServiceImpl recipeService;
+    RecipeService recipeService;
 
     RecipeController controller;
 
@@ -38,7 +38,7 @@ public class RecipeControllerTest {
 
         when(recipeService.findById(anyLong())).thenReturn(recipe);
 
-        mockMvc.perform(get("/recipe/1"))
+        mockMvc.perform(get("/recipe/show/1"))
                 .andExpect(status().isOk())
                 .andExpect((view().name("/recipe/show")));
     }
