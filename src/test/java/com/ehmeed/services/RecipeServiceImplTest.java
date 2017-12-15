@@ -1,5 +1,7 @@
 package com.ehmeed.services;
 
+import com.ehmeed.converters.RecipeCommandToRecipe;
+import com.ehmeed.converters.RecipeToRecipeCommand;
 import com.ehmeed.domain.Recipe;
 import com.ehmeed.repositories.RecipeRepository;
 import org.junit.Before;
@@ -21,12 +23,16 @@ public class RecipeServiceImplTest {
 
     @Mock
     RecipeRepository recipeRepository;
+    @Mock
+    RecipeCommandToRecipe recipeCommandToRecipe;
+    @Mock
+    RecipeToRecipeCommand recipeToRecipeCommand;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        recipeService = new RecipeServiceImpl(recipeRepository);
+        recipeService = new RecipeServiceImpl(recipeRepository, recipeCommandToRecipe, recipeToRecipeCommand);
     }
 
     @Test
