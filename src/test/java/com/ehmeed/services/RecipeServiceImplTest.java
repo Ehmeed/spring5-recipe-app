@@ -1,5 +1,6 @@
 package com.ehmeed.services;
 
+import com.ehmeed.commands.RecipeCommand;
 import com.ehmeed.converters.RecipeCommandToRecipe;
 import com.ehmeed.converters.RecipeToRecipeCommand;
 import com.ehmeed.domain.Recipe;
@@ -49,8 +50,28 @@ public class RecipeServiceImplTest {
         verify(recipeRepository, times(1)).findById(anyLong());
         verify(recipeRepository, never()).findAll();
     }
+
     @Test
-    public void getRecipes() throws Exception {
+    public void getRecipeCommandById() throws Exception {
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+        Optional<Recipe> recipeOptional = Optional.of(recipe);
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        RecipeCommand recipeCommand = new RecipeCommand();
+        recipeCommand.setId(1L);
+
+        when(recipeToRecipeCommand.convert(any())).thenReturn(recipeCommand);
+
+        RecipeCommand commandById = recipeService.findCommandById(1L);
+
+        assertNotNull("Null recipe command returned", commandById);
+        verify(recipeRepository, times(1)).findById(anyLong());
+        verify(recipeRepository, never()).findAll();
+    }
+    @Test
+    public void getRecipesTest() throws Exception {
 
         Recipe recipe = new Recipe();
         HashSet receipesData = new HashSet();
@@ -65,4 +86,12 @@ public class RecipeServiceImplTest {
         verify(recipeRepository, times(1)).findAll();
     }
 
+    @Test
+    public void deleteByIdTest() throws Exception {
+        Long idDelete = Long.valueOf(2L);
+
+        recipeService.deleteById(idDelete);
+
+        verify(recipeRepository, times(1)).deleteById(anyLong());
+    }
 }
