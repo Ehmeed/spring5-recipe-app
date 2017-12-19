@@ -1,5 +1,6 @@
 package com.ehmeed.controllers;
 
+import com.ehmeed.commands.IngredientCommand;
 import com.ehmeed.commands.RecipeCommand;
 import com.ehmeed.services.RecipeService;
 import org.junit.Before;
@@ -18,6 +19,7 @@ public class IngredientControllerTest {
 
     @Mock
     RecipeService recipeService;
+
 
     IngredientController ingredientController;
 
@@ -42,5 +44,18 @@ public class IngredientControllerTest {
                 .andExpect(model().attributeExists("recipe"));
 
         verify(recipeService, times(1)).findCommandById(anyLong());
+    }
+
+    @Test
+    public void testShowIngredient() throws Exception {
+
+        IngredientCommand ingredientCommand = new IngredientCommand();
+
+        when(ingredientService.findByRecipeIdAndId(anyLong(), anyLong())).thenReturn(ingredientCommand);
+
+        mockMvc.perform(get("/recipe/1/ingredient/2/show"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("recipe/ingredient/show"))
+                .andExpect(model().attributeExists("ingredient"));
     }
 }
