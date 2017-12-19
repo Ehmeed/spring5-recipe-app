@@ -4,9 +4,11 @@ import com.ehmeed.commands.IngredientCommand;
 import com.ehmeed.domain.Ingredient;
 import com.sun.istack.internal.Nullable;
 import lombok.Synchronized;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class IngredientToIngredientCommand implements Converter<Ingredient, IngredientCommand> {
 
@@ -21,6 +23,7 @@ public class IngredientToIngredientCommand implements Converter<Ingredient, Ingr
     @Override
     public IngredientCommand convert(Ingredient ingredient) {
         if (ingredient == null) {
+            log.debug("Converted ingredient was null");
             return null;
         }
 
@@ -32,6 +35,7 @@ public class IngredientToIngredientCommand implements Converter<Ingredient, Ingr
         ingredientCommand.setAmount(ingredient.getAmount());
         ingredientCommand.setDescription(ingredient.getDescription());
         ingredientCommand.setUom(uomConverter.convert(ingredient.getUom()));
+        log.debug("Converted ingredient was NOT null");
         return ingredientCommand;
     }
 }

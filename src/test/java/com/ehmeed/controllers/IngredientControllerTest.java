@@ -2,6 +2,7 @@ package com.ehmeed.controllers;
 
 import com.ehmeed.commands.IngredientCommand;
 import com.ehmeed.commands.RecipeCommand;
+import com.ehmeed.services.IngredientService;
 import com.ehmeed.services.RecipeService;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,6 +21,8 @@ public class IngredientControllerTest {
     @Mock
     RecipeService recipeService;
 
+    @Mock
+    IngredientService ingredientService;
 
     IngredientController ingredientController;
 
@@ -29,7 +32,7 @@ public class IngredientControllerTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        ingredientController = new IngredientController(recipeService);
+        ingredientController = new IngredientController(recipeService, ingredientService);
         mockMvc = MockMvcBuilders.standaloneSetup(ingredientController).build();
     }
 
