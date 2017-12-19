@@ -2,6 +2,7 @@ package com.ehmeed.services;
 
 import com.ehmeed.commands.IngredientCommand;
 import com.ehmeed.converters.IngredientToIngredientCommand;
+import com.ehmeed.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import com.ehmeed.domain.Ingredient;
 import com.ehmeed.domain.Recipe;
 import com.ehmeed.repositories.RecipeRepository;
@@ -18,17 +19,19 @@ import static org.mockito.Mockito.*;
 
 public class IngredientServiceImplTest {
 
-    @Mock
-    RecipeRepository recipeRepository;
+    private IngredientToIngredientCommand ingredientToIngredientCommand;
+    private UnitOfMeasureToUnitOfMeasureCommand unitOfMeasureToUnitOfMeasureCommand;
 
     @Mock
-    IngredientToIngredientCommand ingredientToIngredientCommand;
+    RecipeRepository recipeRepository;
 
     IngredientService ingredientService;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
+        unitOfMeasureToUnitOfMeasureCommand = new UnitOfMeasureToUnitOfMeasureCommand();
+        ingredientToIngredientCommand = new IngredientToIngredientCommand(unitOfMeasureToUnitOfMeasureCommand);
 
         ingredientService = new IngredientServiceImpl(recipeRepository, ingredientToIngredientCommand);
     }

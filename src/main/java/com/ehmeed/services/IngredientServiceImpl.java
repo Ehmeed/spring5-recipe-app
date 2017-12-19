@@ -2,7 +2,6 @@ package com.ehmeed.services;
 
 import com.ehmeed.commands.IngredientCommand;
 import com.ehmeed.converters.IngredientToIngredientCommand;
-import com.ehmeed.domain.Ingredient;
 import com.ehmeed.domain.Recipe;
 import com.ehmeed.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -27,27 +26,23 @@ public class IngredientServiceImpl implements IngredientService {
 
         Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
 
-        if(!recipeOptional.isPresent()){
-            return null;
-        }
-        Recipe recipe = recipeOptional.get();
-        log.debug("Recipe has " + recipe.getIngredients().size() + " ingredients");
-        for(Ingredient i : recipe.getIngredients()){
-            log.debug(i.getId()+"");
-        }
-        Optional<IngredientCommand> ingredientCommandOptional = Optional.empty();
-        for (Ingredient ingredient : recipe.getIngredients()) {
-            if (ingredient.getId().equals(ingredientId)) {
-                IngredientCommand convert = ingredientToIngredientCommand.convert(ingredient);
-                ingredientCommandOptional = Optional.of(convert);
-                break;
-            }
+        if (!recipeOptional.isPresent()){
+            //todo impl error handling
+            log.error("recipe id not found. Id: " + recipeId);
         }
 
+        Recipe recipe = recipeOptional.get();
+
+        Optional<IngredientCommand> ingredientCommandOptional = recipe.getIngredients().stream()
+                .filter(ingredient -> ingredient.getId().equals(ingredientId))
+                .map( ingredient -> ingredientToIngredientCommand.convert(ingredient)).findFirst();
 
         if(!ingredientCommandOptional.isPresent()){
-            return null;
+            //todo impl error handling
+            log.error("Ingredient id not found: " + ingredientId);
         }
+
         return ingredientCommandOptional.get();
-    }
+
+       }
 }
