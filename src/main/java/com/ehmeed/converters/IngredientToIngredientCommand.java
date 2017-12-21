@@ -2,10 +2,10 @@ package com.ehmeed.converters;
 
 import com.ehmeed.commands.IngredientCommand;
 import com.ehmeed.domain.Ingredient;
-import com.sun.istack.internal.Nullable;
 import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 @Slf4j

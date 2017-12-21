@@ -2,9 +2,9 @@ package com.ehmeed.converters;
 
 import com.ehmeed.commands.RecipeCommand;
 import com.ehmeed.domain.Recipe;
-import com.sun.istack.internal.Nullable;
 import lombok.Synchronized;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -3,8 +3,8 @@ package com.ehmeed.converters;
 import com.ehmeed.commands.IngredientCommand;
 import com.ehmeed.domain.Ingredient;
 import com.ehmeed.domain.Recipe;
-import com.sun.istack.internal.Nullable;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 @Component
