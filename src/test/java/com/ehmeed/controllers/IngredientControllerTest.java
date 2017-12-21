@@ -40,7 +40,7 @@ public class IngredientControllerTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        ingredientController = new IngredientController(recipeService, ingredientService);
+        ingredientController = new IngredientController(recipeService, ingredientService, unitOfMeasureService);
         mockMvc = MockMvcBuilders.standaloneSetup(ingredientController).build();
     }
 
@@ -49,7 +49,7 @@ public class IngredientControllerTest {
         RecipeCommand recipeCommand = new RecipeCommand();
         when(recipeService.findCommandById(anyLong())).thenReturn(recipeCommand);
 
-        mockMvc.perform(get("/recipe/1/ingredient"))
+        mockMvc.perform(get("/recipe/1/ingredients"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/ingredient/list"))
                 .andExpect(model().attributeExists("recipe"));
@@ -87,7 +87,8 @@ public class IngredientControllerTest {
     @Test
     public void testSaveOrUpdate() throws Exception {
         IngredientCommand ingredientCommand = new IngredientCommand();
-        ingredientCommand.setId(1L);
+        ingredientCommand.setId(3L);
+        ingredientCommand.setRecipeId(2L);
 
         when(ingredientService.saveIngredientCommand(any())).thenReturn(ingredientCommand);
 

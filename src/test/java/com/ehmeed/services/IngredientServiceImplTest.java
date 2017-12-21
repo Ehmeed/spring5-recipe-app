@@ -1,11 +1,14 @@
 package com.ehmeed.services;
 
 import com.ehmeed.commands.IngredientCommand;
+import com.ehmeed.converters.IngredientCommandToIngredient;
 import com.ehmeed.converters.IngredientToIngredientCommand;
+import com.ehmeed.converters.UnitOfMeasureCommandToUnitOfMeasure;
 import com.ehmeed.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import com.ehmeed.domain.Ingredient;
 import com.ehmeed.domain.Recipe;
 import com.ehmeed.repositories.RecipeRepository;
+import com.ehmeed.repositories.UnitOfMeasureRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -21,7 +24,11 @@ public class IngredientServiceImplTest {
 
     private IngredientToIngredientCommand ingredientToIngredientCommand;
     private UnitOfMeasureToUnitOfMeasureCommand unitOfMeasureToUnitOfMeasureCommand;
+    private UnitOfMeasureCommandToUnitOfMeasure unitOfMeasureCommandToUnitOfMeasure;
+    private IngredientCommandToIngredient ingredientCommandToIngredient;
 
+    @Mock
+    UnitOfMeasureRepository unitOfMeasureRepository;
     @Mock
     RecipeRepository recipeRepository;
 
@@ -32,8 +39,9 @@ public class IngredientServiceImplTest {
         MockitoAnnotations.initMocks(this);
         unitOfMeasureToUnitOfMeasureCommand = new UnitOfMeasureToUnitOfMeasureCommand();
         ingredientToIngredientCommand = new IngredientToIngredientCommand(unitOfMeasureToUnitOfMeasureCommand);
+        ingredientCommandToIngredient = new IngredientCommandToIngredient(unitOfMeasureCommandToUnitOfMeasure);
 
-        ingredientService = new IngredientServiceImpl(recipeRepository, ingredientToIngredientCommand);
+        ingredientService = new IngredientServiceImpl(recipeRepository, ingredientToIngredientCommand, ingredientCommandToIngredient, unitOfMeasureRepository);
     }
 
 
