@@ -36,4 +36,7 @@ public class IngredientController {
 
         return "recipe/ingredient/show";
     }
+
+    public String updateRecipeIngredient(){return null;};
+    public String saveOrUpdate(){return null;};
 }
