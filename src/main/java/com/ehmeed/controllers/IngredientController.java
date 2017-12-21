@@ -1,6 +1,8 @@
 package com.ehmeed.controllers;
 
 import com.ehmeed.commands.IngredientCommand;
+import com.ehmeed.commands.RecipeCommand;
+import com.ehmeed.commands.UnitOfMeasureCommand;
 import com.ehmeed.services.IngredientService;
 import com.ehmeed.services.RecipeService;
 import com.ehmeed.services.UnitOfMeasureService;
@@ -41,13 +43,24 @@ public class IngredientController {
 
     @GetMapping
     @RequestMapping("/recipe/{recipeId}/ingredient/{ingredientId}/update")
-    public String updateRecipeIngredient(@PathVariable String recipeId,
-                                         @PathVariable String ingredientId,
-                                         Model model){
+    public String updateRecipeIngredient(@PathVariable String recipeId, @PathVariable String ingredientId, Model model){
         model.addAttribute("ingredient", ingredientService.findByRecipeIdAndId(Long.valueOf(recipeId), Long.valueOf(ingredientId)));
         model.addAttribute("uomList", unitOfMeasureService.listAllUoms());
         return "recipe/ingredient/ingredientform";
     }
+    @GetMapping
+    @RequestMapping("/recipe/{recipeId}/ingredient/new")
+    public String newIngredient(@PathVariable String recipeId, Model model){
+        RecipeCommand recipeCommand = recipeService.findCommandById(Long.valueOf(recipeId));
+
+        IngredientCommand ingredientCommand = new IngredientCommand();
+        ingredientCommand.setRecipeId(Long.valueOf(recipeId));
+        model.addAttribute("ingredient", ingredientCommand);
+        ingredientCommand.setUom(new UnitOfMeasureCommand());
+        model.addAttribute("uomList", unitOfMeasureService.listAllUoms());
+        return "recipe/ingredient/ingredientform";
+    }
+
     @PostMapping
     @RequestMapping("/recipe/{recipeId}/ingredient")
     public String saveOrUpdate(@ModelAttribute IngredientCommand ingredientCommand){
