@@ -96,7 +96,6 @@ public class IngredientServiceImpl implements IngredientService {
 
             //check by description
             if(!savedIngredientOptional.isPresent()){
-                //not totally safe... But best guess
                 savedIngredientOptional = savedRecipe.getIngredients().stream()
                         .filter(recipeIngredients -> recipeIngredients.getDescription().equals(command.getDescription()))
                         .filter(recipeIngredients -> recipeIngredients.getAmount().equals(command.getAmount()))
