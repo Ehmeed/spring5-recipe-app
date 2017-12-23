@@ -76,7 +76,7 @@ public class IngredientController {
         ingredientService.deleteByRecipeIdAndIngredientId(Long.valueOf(recipeId), Long.valueOf(ingredientId));
         model.addAttribute("recipe", recipeService.findCommandById(Long.valueOf(recipeId)));
 
-        return "recipe/ingredient/list";
+        return "redirect:/recipe/"+ recipeId +"/ingredients";
     }
 
 

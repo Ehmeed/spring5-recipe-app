@@ -81,7 +81,8 @@ public class IngredientServiceImplTest {
         recipe.setId(recipeId);
         Ingredient ingredient = new Ingredient();
         ingredient.setId(ingredientId);
-        recipe.getIngredients().add(ingredient);
+        recipe.addIngredient(ingredient);
+        ingredient.setRecipe(recipe);
 
         Optional<Recipe> recipeOptional = Optional.of(recipe);
         when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);

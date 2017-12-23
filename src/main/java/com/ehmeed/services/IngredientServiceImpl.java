@@ -115,7 +115,7 @@ public class IngredientServiceImpl implements IngredientService {
     public void deleteByRecipeIdAndIngredientId(Long recipeId, Long ingredientId) {
         Optional<Recipe>  recipeOptional = recipeRepository.findById(Long.valueOf(recipeId));
         if(!recipeOptional.isPresent()){
-            log.debug("Tried to delete ingredient from non-existing recipe");
+            log.debug("Tried to delete ingredient from non-existing recipe with id " + recipeId);
         }
         Recipe recipe = recipeOptional.get();
 
@@ -126,9 +126,10 @@ public class IngredientServiceImpl implements IngredientService {
                 .findFirst();
 
         if(!ingredientOptional.isPresent()){
-            log.debug("Tried to delete non-existing ingredient");
+            log.debug("Tried to delete non-existing ingredient with id " + ingredientId);
         }
         Ingredient ingredient = ingredientOptional.get();
+        ingredient.setRecipe(null);
         recipe.getIngredients().remove(ingredient);
 
         recipeRepository.save(recipe);
