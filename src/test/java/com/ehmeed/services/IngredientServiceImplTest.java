@@ -77,6 +77,15 @@ public class IngredientServiceImplTest {
     public void deleteByRecipeIdAndIngredientId() throws Exception {
         Long recipeId = Long.valueOf(2L);
         Long ingredientId = Long.valueOf(1L);
+        Recipe recipe = new Recipe();
+        recipe.setId(recipeId);
+        Ingredient ingredient = new Ingredient();
+        ingredient.setId(ingredientId);
+        recipe.getIngredients().add(ingredient);
+
+        Optional<Recipe> recipeOptional = Optional.of(recipe);
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
 
         ingredientService.deleteByRecipeIdAndIngredientId(recipeId, ingredientId);
 
