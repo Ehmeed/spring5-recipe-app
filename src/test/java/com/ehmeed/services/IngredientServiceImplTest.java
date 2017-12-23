@@ -22,6 +22,7 @@ import static org.mockito.Mockito.*;
 
 public class IngredientServiceImplTest {
 
+
     private IngredientToIngredientCommand ingredientToIngredientCommand;
     private UnitOfMeasureToUnitOfMeasureCommand unitOfMeasureToUnitOfMeasureCommand;
     private UnitOfMeasureCommandToUnitOfMeasure unitOfMeasureCommandToUnitOfMeasure;
@@ -70,6 +71,17 @@ public class IngredientServiceImplTest {
         assertEquals(Long.valueOf(3L), ingredientCommand.getId());
         assertEquals(Long.valueOf(1L), ingredientCommand.getRecipeId());
         verify(recipeRepository, times(1)).findById(anyLong());
+    }
+
+    @Test
+    public void deleteByRecipeIdAndIngredientId() throws Exception {
+        Long recipeId = Long.valueOf(2L);
+        Long ingredientId = Long.valueOf(1L);
+
+        ingredientService.deleteByRecipeIdAndIngredientId(recipeId, ingredientId);
+
+        verify(recipeRepository, never()).deleteById(anyLong());
+        verify(recipeRepository, times(1)).save(any());
     }
 
 }
